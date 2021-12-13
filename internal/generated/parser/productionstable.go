@@ -142,7 +142,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `UnaryExpr : ConstantExpr	<< X[0], nil >>`,
+		String: `UnaryExpr : DerefExpr	<< X[0], nil >>`,
 		Id:         "UnaryExpr",
 		NTType:     6,
 		Index:      12,
@@ -152,7 +152,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `UnaryExpr : CallExpr	<< X[0], nil >>`,
+		String: `UnaryExpr : ConstantExpr	<< X[0], nil >>`,
 		Id:         "UnaryExpr",
 		NTType:     6,
 		Index:      13,
@@ -162,10 +162,60 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `ConstantExpr : "true"	<< ast.NewConstantBoolExpr(true) >>`,
-		Id:         "ConstantExpr",
+		String: `DerefExpr : DerefExpr "." identifier "(" ArgList ")"	<< ast.NewMethodCallExpr(X[0], X[2], X[4]) >>`,
+		Id:         "DerefExpr",
 		NTType:     7,
 		Index:      14,
+		NumSymbols: 6,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return ast.NewMethodCallExpr(X[0], X[2], X[4])
+		},
+	},
+	ProdTabEntry{
+		String: `DerefExpr : DerefExpr "." identifier	<< ast.NewDerefExpr(X[0], X[2]) >>`,
+		Id:         "DerefExpr",
+		NTType:     7,
+		Index:      15,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return ast.NewDerefExpr(X[0], X[2])
+		},
+	},
+	ProdTabEntry{
+		String: `DerefExpr : FunctionCallExpr	<< X[0], nil >>`,
+		Id:         "DerefExpr",
+		NTType:     7,
+		Index:      16,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `DerefExpr : LookupExpr	<< X[0], nil >>`,
+		Id:         "DerefExpr",
+		NTType:     7,
+		Index:      17,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `FunctionCallExpr : identifier "(" ArgList ")"	<< ast.NewFunctionCallExpr(X[0], X[2]) >>`,
+		Id:         "FunctionCallExpr",
+		NTType:     8,
+		Index:      18,
+		NumSymbols: 4,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return ast.NewFunctionCallExpr(X[0], X[2])
+		},
+	},
+	ProdTabEntry{
+		String: `ConstantExpr : "true"	<< ast.NewConstantBoolExpr(true) >>`,
+		Id:         "ConstantExpr",
+		NTType:     9,
+		Index:      19,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewConstantBoolExpr(true)
@@ -174,8 +224,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ConstantExpr : "false"	<< ast.NewConstantBoolExpr(false) >>`,
 		Id:         "ConstantExpr",
-		NTType:     7,
-		Index:      15,
+		NTType:     9,
+		Index:      20,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewConstantBoolExpr(false)
@@ -184,8 +234,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ConstantExpr : int_lit	<< ast.NewConstantIntExpr(X[0]) >>`,
 		Id:         "ConstantExpr",
-		NTType:     7,
-		Index:      16,
+		NTType:     9,
+		Index:      21,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewConstantIntExpr(X[0])
@@ -194,8 +244,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ConstantExpr : string_lit	<< ast.NewConstantStringExpr(X[0]) >>`,
 		Id:         "ConstantExpr",
-		NTType:     7,
-		Index:      17,
+		NTType:     9,
+		Index:      22,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewConstantStringExpr(X[0])
@@ -204,8 +254,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ArgList : ArgList "," Expr	<< ast.NewArgList(X[0], X[2]) >>`,
 		Id:         "ArgList",
-		NTType:     8,
-		Index:      18,
+		NTType:     10,
+		Index:      23,
 		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewArgList(X[0], X[2])
@@ -214,8 +264,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ArgList : Expr	<< ast.NewArgList(nil, X[0]) >>`,
 		Id:         "ArgList",
-		NTType:     8,
-		Index:      19,
+		NTType:     10,
+		Index:      24,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewArgList(nil, X[0])
@@ -224,61 +274,11 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `ArgList : empty	<< ast.NewEmptyArgList() >>`,
 		Id:         "ArgList",
-		NTType:     8,
-		Index:      20,
+		NTType:     10,
+		Index:      25,
 		NumSymbols: 0,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewEmptyArgList()
-		},
-	},
-	ProdTabEntry{
-		String: `CallExpr : DerefExpr "." identifier "(" ArgList ")"	<< ast.NewMethodCallExpr(X[0], X[2], X[4]) >>`,
-		Id:         "CallExpr",
-		NTType:     9,
-		Index:      21,
-		NumSymbols: 6,
-		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
-			return ast.NewMethodCallExpr(X[0], X[2], X[4])
-		},
-	},
-	ProdTabEntry{
-		String: `CallExpr : identifier "(" ArgList ")"	<< ast.NewFunctionCallExpr(X[0], X[2]) >>`,
-		Id:         "CallExpr",
-		NTType:     9,
-		Index:      22,
-		NumSymbols: 4,
-		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
-			return ast.NewFunctionCallExpr(X[0], X[2])
-		},
-	},
-	ProdTabEntry{
-		String: `CallExpr : DerefExpr	<<  >>`,
-		Id:         "CallExpr",
-		NTType:     9,
-		Index:      23,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
-			return X[0], nil
-		},
-	},
-	ProdTabEntry{
-		String: `DerefExpr : DerefExpr "." identifier	<< ast.NewDerefExpr(X[0], X[2]) >>`,
-		Id:         "DerefExpr",
-		NTType:     10,
-		Index:      24,
-		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
-			return ast.NewDerefExpr(X[0], X[2])
-		},
-	},
-	ProdTabEntry{
-		String: `DerefExpr : LookupExpr	<< X[0], nil >>`,
-		Id:         "DerefExpr",
-		NTType:     10,
-		Index:      25,
-		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
-			return X[0], nil
 		},
 	},
 	ProdTabEntry{
