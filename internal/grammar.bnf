@@ -46,7 +46,7 @@ RelExpr
 UnaryExpr
 	: "(" Expr ")"  											    << ast.NewGroupExpr($1) >>
 	| ConstantExpr                                                  << $0, nil >>
-    | Name                                                          << $0, nil >>
+    | DerefExpr                                                     << $0, nil >>
     ;
 
 ConstantExpr
@@ -56,6 +56,11 @@ ConstantExpr
     | string_lit                                                    << ast.NewConstantStringExpr($0) >>
     ;
 
-Name
+DerefExpr
+    : DerefExpr "." identifier                                      << ast.NewDerefExpr($0, $2) >>
+    | LookupExpr                                                    << $0, nil >>
+    ;
+
+LookupExpr
     : identifier                                                    << ast.NewLookupExpr($0) >>
     ;

@@ -115,3 +115,24 @@ func TestCompileAndEvaluateCompareStrings(t *testing.T) {
 
 	assert.Equal(t, true, result)
 }
+
+func TestCompileAndEvaluateDeref(t *testing.T) {
+
+	expr, err := CompileExpression("map.value")
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	env := map[string]interface{}{}
+	amap := map[string]interface{}{}
+	amap["value"] = "yay"
+	env["map"] = amap
+	result, err := expr.Evaluate(env)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	assert.Equal(t, "yay", result)
+}
