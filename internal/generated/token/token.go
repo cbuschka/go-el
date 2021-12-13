@@ -150,6 +150,7 @@ var TokMap = TokenMap{
 		"int_lit",
 		"string_lit",
 		",",
+		"empty",
 		".",
 		"identifier",
 	},
@@ -169,7 +170,8 @@ var TokMap = TokenMap{
 		"int_lit":    11,
 		"string_lit": 12,
 		",":          13,
-		".":          14,
-		"identifier": 15,
+		"empty":      14,
+		".":          15,
+		"identifier": 16,
 	},
 }
