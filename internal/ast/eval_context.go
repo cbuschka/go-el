@@ -29,10 +29,6 @@ func (e *EvaluationContext) ResolveFrom(name string, parent interface{}) (interf
 		return val, nil
 	}
 
-	typeMeta := reflect.TypeOf(parent)
-	if typeMeta.Kind() == reflect.Ptr {
-		typeMeta = typeMeta.Elem()
-	}
 	baseObject := reflect.ValueOf(parent)
 	if baseObject.Kind() == reflect.Ptr {
 		baseObject = baseObject.Elem()
@@ -45,4 +41,20 @@ func (e *EvaluationContext) ResolveFrom(name string, parent interface{}) (interf
 
 	return fieldMeta.Interface(), nil
 
+}
+
+func (e *EvaluationContext) CallOn(name string, target interface{}) (interface{}, error) {
+	baseObject := reflect.ValueOf(target)
+
+	methodMeta := baseObject.MethodByName(name)
+	if methodMeta == *new(reflect.Value) {
+		return nil, fmt.Errorf("method %s not found", name)
+	}
+
+	result := methodMeta.Call([]reflect.Value{})
+	if result == nil || len(result) != 1 {
+		return nil, fmt.Errorf("%s returned invalid result %v", name, result)
+	}
+
+	return result[0].Interface(), nil
 }

@@ -140,3 +140,26 @@ func TestCompileAndEvaluateDeref(t *testing.T) {
 
 	assert.Equal(t, "yay", result)
 }
+
+func (t TestStruct) String() string {
+	return "Yay!"
+}
+
+func TestCompileAndEvaluateCall(t *testing.T) {
+
+	expr, err := CompileExpression("struct.String()")
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	env := map[string]interface{}{}
+	env["struct"] = TestStruct{}
+	result, err := expr.Evaluate(env)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	assert.Equal(t, "Yay!", result)
+}

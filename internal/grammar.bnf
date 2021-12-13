@@ -46,7 +46,7 @@ RelExpr
 UnaryExpr
 	: "(" Expr ")"  											    << ast.NewGroupExpr($1) >>
 	| ConstantExpr                                                  << $0, nil >>
-    | DerefExpr                                                     << $0, nil >>
+    | CallExpr                                                      << $0, nil >>
     ;
 
 ConstantExpr
@@ -54,6 +54,11 @@ ConstantExpr
     | "false"                                                       << ast.NewConstantBoolExpr(false) >>
     | int_lit                                                       << ast.NewConstantIntExpr($0) >>
     | string_lit                                                    << ast.NewConstantStringExpr($0) >>
+    ;
+
+CallExpr
+    : DerefExpr "." identifier "(" ")"                              << ast.NewCallExpr($0, $2) >>
+    | DerefExpr
     ;
 
 DerefExpr
