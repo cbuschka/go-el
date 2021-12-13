@@ -32,6 +32,9 @@ func CompileExpression(script string) (*Expression, error) {
 	return &Expression{program: &boolExpr}, nil
 }
 
-func (e *Expression) Evaluate(env map[string]interface{}) (interface{}, error) {
-	return (*e.program).Eval(env)
+func (e *Expression) Evaluate(env interface{}) (interface{}, error) {
+
+	evalContext := ast.NewEvaluationContext(env)
+
+	return (*e.program).Eval(evalContext)
 }

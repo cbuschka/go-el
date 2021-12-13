@@ -8,6 +8,6 @@ func NewGroupExpr(a Attrib) (*GroupExpr, error) {
 	return &GroupExpr{a.(Expr)}, nil
 }
 
-func (g *GroupExpr) Eval(env map[string]interface{}) (interface{}, error) {
+func (g *GroupExpr) Eval(env *EvaluationContext) (interface{}, error) {
 	return g.A.Eval(env)
 }

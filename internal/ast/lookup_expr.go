@@ -1,7 +1,6 @@
 package ast
 
 import (
-	"fmt"
 	"github.com/cbuschka/go-expr/internal/generated/token"
 )
 
@@ -14,10 +13,10 @@ func NewLookupExpr(a Attrib) (*LookupExpr, error) {
 	return &LookupExpr{Identifier: string(a.(*token.Token).Lit)}, nil
 }
 
-func (e *LookupExpr) Eval(env map[string]interface{}) (interface{}, error) {
-	val, found := env[e.Identifier]
-	if !found {
-		return false, fmt.Errorf("%s not found", e.Identifier)
+func (e *LookupExpr) Eval(env *EvaluationContext) (interface{}, error) {
+	val, err := env.Resolve(e.Identifier)
+	if err != nil {
+		return nil, err
 	}
 
 	return val, nil

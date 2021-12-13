@@ -15,7 +15,7 @@ type RelationalExpr struct {
 	Op RelationalOp
 }
 
-func (this *RelationalExpr) Eval(env map[string]interface{}) (interface{}, error) {
+func (this *RelationalExpr) Eval(env *EvaluationContext) (interface{}, error) {
 	aVal, err := this.A.Eval(env)
 	if err != nil {
 		return nil, err

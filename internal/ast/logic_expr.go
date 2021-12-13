@@ -25,7 +25,7 @@ func NewOrExpr(a, b Attrib) (*BoolBinaryExpr, error) {
 	return &BoolBinaryExpr{a.(Expr), b.(Expr), OR}, nil
 }
 
-func (this *BoolBinaryExpr) Eval(env map[string]interface{}) (interface{}, error) {
+func (this *BoolBinaryExpr) Eval(env *EvaluationContext) (interface{}, error) {
 	aVal, err := this.A.Eval(env)
 	if err != nil {
 		return nil, err

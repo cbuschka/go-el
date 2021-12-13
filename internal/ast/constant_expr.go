@@ -9,7 +9,7 @@ type ConstantExpr struct {
 	Value interface{}
 }
 
-func (e *ConstantExpr) Eval(env map[string]interface{}) (interface{}, error) {
+func (e *ConstantExpr) Eval(*EvaluationContext) (interface{}, error) {
 	return e.Value, nil
 }
 
