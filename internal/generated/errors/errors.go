@@ -8,7 +8,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/cbuschka/go-expr/internal/generated/token"
+	"github.com/cbuschka/go-el/internal/generated/token"
 )
 
 type ErrorSymbol interface {

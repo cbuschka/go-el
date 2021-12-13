@@ -5,7 +5,7 @@ package lexer
 import (
 	"fmt"
 
-	"github.com/cbuschka/go-expr/internal/generated/token"
+	"github.com/cbuschka/go-el/internal/generated/token"
 )
 
 type ActionTable [NumStates]ActionRow

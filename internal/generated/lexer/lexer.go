@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"unicode/utf8"
 
-	"github.com/cbuschka/go-expr/internal/generated/token"
+	"github.com/cbuschka/go-el/internal/generated/token"
 )
 
 const (

@@ -3,7 +3,7 @@
 package parser
 
 import (
-	"github.com/cbuschka/go-expr/internal/ast"
+	"github.com/cbuschka/go-el/internal/ast"
 )
 
 type (

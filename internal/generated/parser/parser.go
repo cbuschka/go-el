@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	parseError "github.com/cbuschka/go-expr/internal/generated/errors"
-	"github.com/cbuschka/go-expr/internal/generated/token"
+	parseError "github.com/cbuschka/go-el/internal/generated/errors"
+	"github.com/cbuschka/go-el/internal/generated/token"
 )
 
 const (
