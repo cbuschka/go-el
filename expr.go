@@ -1,9 +1,9 @@
-package expr
+package el
 
 import (
-	"github.com/cbuschka/go-expr/internal/ast"
-	"github.com/cbuschka/go-expr/internal/generated/lexer"
-	"github.com/cbuschka/go-expr/internal/generated/parser"
+	"github.com/cbuschka/go-el/internal/ast"
+	"github.com/cbuschka/go-el/internal/generated/lexer"
+	"github.com/cbuschka/go-el/internal/generated/parser"
 )
 
 type Expression struct {

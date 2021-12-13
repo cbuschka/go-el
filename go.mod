@@ -1,4 +1,4 @@
-module github.com/cbuschka/go-expr
+module github.com/cbuschka/go-el
 
 go 1.16
 

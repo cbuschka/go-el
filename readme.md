@@ -1,6 +1,6 @@
-# go-expr
+# go-el
 
-### A simple expression evaluator created with gocc
+### A simple expression language created with gocc
 
 ## Usage
 
@@ -8,12 +8,12 @@
 package main
 
 import (
-	exprPkg "github.com/cbuschka/go-expr"
+	"github.com/cbuschka/go-el"
 	"fmt"
 )
 
 func main() {
-	expr := exprPkg.MustCompile("true")
+	expr := el.MustCompile("true")
 	env := map[string]interface{}{}
 	result, err := expr.Evaluate(env)
 	if err != nil {

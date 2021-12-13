@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	exprPkg "github.com/cbuschka/go-expr"
+	"github.com/cbuschka/go-el"
 )
 
 func main() {
-	expr := exprPkg.MustCompile("true")
+	expr := el.MustCompile("true")
 	env := map[string]interface{}{}
 	result, err := expr.Evaluate(env)
 	if err != nil {
