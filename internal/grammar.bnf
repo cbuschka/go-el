@@ -1,0 +1,61 @@
+int_lit : _digit {_digit} ;
+
+_digit : '0'-'9' ;
+
+string_lit : '"' {.} '"' ;
+
+_letter : 'a'-'z' | 'A'-'Z' ;
+
+_idchar : _letter | _digit | '_' ;
+
+identifier : (_letter | '_') {_idchar} ;
+
+!whitespace : ' ' | '\t' | '\n' | '\r' ;
+
+<<
+import (
+	"github.com/cbuschka/go-expr/internal/ast"
+)
+>>
+
+Goal
+    : Expr                                                          << $0, nil >>
+    ;
+
+Expr
+	: AndExpr
+	;
+
+AndExpr
+    : AndExpr "&&" OrExpr                                           << ast.NewAndExpr($0, $2) >>
+    | OrExpr                                                        << $0, nil >>
+    ;
+
+OrExpr
+    : OrExpr "||" RelExpr                                           << ast.NewOrExpr($0, $2) >>
+    | RelExpr                                                       << $0, nil >>
+    ;
+
+RelExpr
+    : RelExpr "==" UnaryExpr                                       << ast.NewEqExpr($0, $2) >>
+    | RelExpr "!=" UnaryExpr                                       << ast.NewNeExpr($0, $2) >>
+    | RelExpr "<>" UnaryExpr                                       << ast.NewNeExpr($0, $2) >>
+    | UnaryExpr                                                    << $0, nil >>
+    ;
+
+UnaryExpr
+	: "(" Expr ")"  											    << ast.NewGroupExpr($1) >>
+	| ConstantExpr                                                  << $0, nil >>
+    | Name                                                          << $0, nil >>
+    ;
+
+ConstantExpr
+    : "true"                                                        << ast.NewConstantBoolExpr(true) >>
+    | "false"                                                       << ast.NewConstantBoolExpr(false) >>
+    | int_lit                                                       << ast.NewConstantIntExpr($0) >>
+    | string_lit                                                    << ast.NewConstantStringExpr($0) >>
+    ;
+
+Name
+    : identifier                                                    << ast.NewLookupExpr($0) >>
+    ;
