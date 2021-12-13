@@ -14,11 +14,11 @@ func NewEvaluationContext() *EvaluationContext {
 	return &EvaluationContext{Root: map[string]interface{}{}, Functions: map[string]interface{}{}}
 }
 
-func (c *EvaluationContext) AddFunction(name string, f interface{}) {
+func (c *EvaluationContext) SetFunction(name string, f interface{}) {
 	c.Functions[name] = f
 }
 
-func (c *EvaluationContext) AddValue(name string, value interface{}) {
+func (c *EvaluationContext) SetValue(name string, value interface{}) {
 	c.Root[name] = value
 }
 

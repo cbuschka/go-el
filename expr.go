@@ -6,17 +6,22 @@ import (
 	"github.com/cbuschka/go-el/internal/generated/parser"
 )
 
-type Expression struct {
-	program *ast.Expr
+type Expression interface {
+	EvaluateWithContext(evalContext EvaluationContext) (interface{}, error)
+	Evaluate() (interface{}, error)
 }
 
 type EvaluationContext interface {
-	AddFunction(name string, function interface{})
-	AddValue(name string, value interface{})
+	SetFunction(name string, function interface{})
+	SetValue(name string, value interface{})
 }
 
-func MustCompile(script string) *Expression {
-	expr, err := CompileExpression(script)
+type expression struct {
+	program *ast.Expr
+}
+
+func MustCompile(script string) Expression {
+	expr, err := Compile(script)
 	if err != nil {
 		panic(err)
 	}
@@ -24,7 +29,7 @@ func MustCompile(script string) *Expression {
 	return expr
 }
 
-func CompileExpression(script string) (*Expression, error) {
+func Compile(script string) (Expression, error) {
 	l := lexer.NewLexer([]byte(script))
 	p := parser.NewParser()
 	st, err := p.Parse(l)
@@ -34,13 +39,18 @@ func CompileExpression(script string) (*Expression, error) {
 
 	boolExpr := st.(ast.Expr)
 
-	return &Expression{program: &boolExpr}, nil
+	return Expression(&expression{program: &boolExpr}), nil
 }
 
 func NewEvaluationContext() EvaluationContext {
 	return ast.NewEvaluationContext()
 }
 
-func (e *Expression) Evaluate(env EvaluationContext) (interface{}, error) {
-	return (*e.program).Eval(env.(*ast.EvaluationContext))
+func (e *expression) Evaluate() (interface{}, error) {
+	evalContext := NewEvaluationContext()
+	return e.EvaluateWithContext(evalContext)
+}
+
+func (e *expression) EvaluateWithContext(evalContext EvaluationContext) (interface{}, error) {
+	return (*e.program).Eval(evalContext.(*ast.EvaluationContext))
 }

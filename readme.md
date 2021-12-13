@@ -14,8 +14,7 @@ import (
 
 func main() {
 	expr := el.MustCompile("true")
-	env := el.NewEvaluationContext()
-	result, err := expr.Evaluate(env)
+	result, err := expr.Evaluate()
 	if err != nil {
 		panic(err)
 	}

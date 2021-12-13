@@ -8,13 +8,13 @@ import (
 
 func TestCompileAndEvaluate(t *testing.T) {
 
-	expr, err := CompileExpression("true")
+	expr, err := Compile("true")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	result, err := expr.Evaluate(NewEvaluationContext())
+	result, err := expr.Evaluate()
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -25,13 +25,13 @@ func TestCompileAndEvaluate(t *testing.T) {
 
 func TestCompileAndEvaluateFalse(t *testing.T) {
 
-	expr, err := CompileExpression("false")
+	expr, err := Compile("false")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	result, err := expr.Evaluate(NewEvaluationContext())
+	result, err := expr.Evaluate()
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -42,15 +42,15 @@ func TestCompileAndEvaluateFalse(t *testing.T) {
 
 func TestCompileAndEvaluateLookup(t *testing.T) {
 
-	expr, err := CompileExpression("flag")
+	expr, err := Compile("flag")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
-	env.AddValue("flag", true)
-	result, err := expr.Evaluate(env)
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetValue("flag", true)
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -61,16 +61,16 @@ func TestCompileAndEvaluateLookup(t *testing.T) {
 
 func TestCompileAndEvaluateCompositeAnd(t *testing.T) {
 
-	expr, err := CompileExpression("( flag && false ) || (flag2 && flag )")
+	expr, err := Compile("( flag && false ) || (flag2 && flag )")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
-	env.AddValue("flag", true)
-	env.AddValue("flag2", true)
-	result, err := expr.Evaluate(env)
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetValue("flag", true)
+	evalCtx.SetValue("flag2", true)
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -81,15 +81,15 @@ func TestCompileAndEvaluateCompositeAnd(t *testing.T) {
 
 func TestCompileAndEvaluateCompareInt(t *testing.T) {
 
-	expr, err := CompileExpression("value == 1")
+	expr, err := Compile("value == 1")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
-	env.AddValue("value", 1)
-	result, err := expr.Evaluate(env)
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetValue("value", 1)
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -100,15 +100,15 @@ func TestCompileAndEvaluateCompareInt(t *testing.T) {
 
 func TestCompileAndEvaluateCompareStrings(t *testing.T) {
 
-	expr, err := CompileExpression("value == \"yay\"")
+	expr, err := Compile("value == \"yay\"")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
-	env.AddValue("value", "yay")
-	result, err := expr.Evaluate(env)
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetValue("value", "yay")
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -123,17 +123,17 @@ type TestStruct struct {
 
 func TestCompileAndEvaluateDeref(t *testing.T) {
 
-	expr, err := CompileExpression("map.struct.Value")
+	expr, err := Compile("map.struct.Value")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
+	evalCtx := NewEvaluationContext()
 	aMap := map[string]interface{}{}
 	aMap["struct"] = TestStruct{Value: "yay"}
-	env.AddValue("map", aMap)
-	result, err := expr.Evaluate(env)
+	evalCtx.SetValue("map", aMap)
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -148,15 +148,15 @@ func (t TestStruct) String() string {
 
 func TestCompileAndEvaluateCall(t *testing.T) {
 
-	expr, err := CompileExpression("struct.String()")
+	expr, err := Compile("struct.String()")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
-	env.AddValue("struct", TestStruct{})
-	result, err := expr.Evaluate(env)
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetValue("struct", TestStruct{})
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -171,15 +171,15 @@ func (t TestStruct) Say(message string, toWhom string, how string) string {
 
 func TestCompileAndEvaluateCallWithArgs(t *testing.T) {
 
-	expr, err := CompileExpression("struct.Say(\"Hello World!\", \"All of the world\", \"Very loud\")")
+	expr, err := Compile("struct.Say(\"Hello World!\", \"All of the world\", \"Very loud\")")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
-	env.AddValue("struct", TestStruct{})
-	result, err := expr.Evaluate(env)
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetValue("struct", TestStruct{})
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
@@ -190,17 +190,17 @@ func TestCompileAndEvaluateCallWithArgs(t *testing.T) {
 
 func TestCompileAndEvaluateFunctionCallWithArgs(t *testing.T) {
 
-	expr, err := CompileExpression("say(\"huhu\")")
+	expr, err := Compile("say(\"huhu\")")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
-	env := NewEvaluationContext()
-	env.AddFunction("say", func(what string) string {
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetFunction("say", func(what string) string {
 		return fmt.Sprintf("Said: %s", what)
 	})
-	result, err := expr.Evaluate(env)
+	result, err := expr.EvaluateWithContext(evalCtx)
 	if err != nil {
 		t.Fatal(err)
 		return
