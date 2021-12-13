@@ -2,7 +2,7 @@
 
 package parser
 
-const numNTSymbols = 10
+const numNTSymbols = 11
 
 type (
 	gotoTable [numStates]gotoRow
@@ -19,8 +19,9 @@ var gotoTab = gotoTable{
 		5,  // RelExpr
 		6,  // UnaryExpr
 		8,  // ConstantExpr
-		9,  // DerefExpr
-		15, // LookupExpr
+		9,  // CallExpr
+		14, // DerefExpr
+		16, // LookupExpr
 	},
 	gotoRow{ // S1
 		-1, // S'
@@ -31,6 +32,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -43,6 +45,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -55,6 +58,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -67,6 +71,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -79,6 +84,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -91,20 +97,22 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
 	gotoRow{ // S7
 		-1, // S'
 		-1, // Goal
-		21, // Expr
-		22, // AndExpr
-		23, // OrExpr
-		24, // RelExpr
-		25, // UnaryExpr
-		27, // ConstantExpr
-		28, // DerefExpr
-		34, // LookupExpr
+		22, // Expr
+		23, // AndExpr
+		24, // OrExpr
+		25, // RelExpr
+		26, // UnaryExpr
+		28, // ConstantExpr
+		29, // CallExpr
+		34, // DerefExpr
+		36, // LookupExpr
 	},
 	gotoRow{ // S8
 		-1, // S'
@@ -115,6 +123,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -127,6 +136,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -139,6 +149,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -151,6 +162,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -163,6 +175,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -175,6 +188,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -187,6 +201,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -199,6 +214,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -207,24 +223,26 @@ var gotoTab = gotoTable{
 		-1, // Goal
 		-1, // Expr
 		-1, // AndExpr
-		36, // OrExpr
-		5,  // RelExpr
-		6,  // UnaryExpr
-		8,  // ConstantExpr
-		9,  // DerefExpr
-		15, // LookupExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
 	},
 	gotoRow{ // S17
 		-1, // S'
 		-1, // Goal
 		-1, // Expr
 		-1, // AndExpr
-		-1, // OrExpr
-		37, // RelExpr
+		38, // OrExpr
+		5,  // RelExpr
 		6,  // UnaryExpr
 		8,  // ConstantExpr
-		9,  // DerefExpr
-		15, // LookupExpr
+		9,  // CallExpr
+		14, // DerefExpr
+		16, // LookupExpr
 	},
 	gotoRow{ // S18
 		-1, // S'
@@ -232,11 +250,12 @@ var gotoTab = gotoTable{
 		-1, // Expr
 		-1, // AndExpr
 		-1, // OrExpr
-		-1, // RelExpr
-		38, // UnaryExpr
+		39, // RelExpr
+		6,  // UnaryExpr
 		8,  // ConstantExpr
-		9,  // DerefExpr
-		15, // LookupExpr
+		9,  // CallExpr
+		14, // DerefExpr
+		16, // LookupExpr
 	},
 	gotoRow{ // S19
 		-1, // S'
@@ -245,10 +264,11 @@ var gotoTab = gotoTable{
 		-1, // AndExpr
 		-1, // OrExpr
 		-1, // RelExpr
-		39, // UnaryExpr
+		40, // UnaryExpr
 		8,  // ConstantExpr
-		9,  // DerefExpr
-		15, // LookupExpr
+		9,  // CallExpr
+		14, // DerefExpr
+		16, // LookupExpr
 	},
 	gotoRow{ // S20
 		-1, // S'
@@ -257,10 +277,11 @@ var gotoTab = gotoTable{
 		-1, // AndExpr
 		-1, // OrExpr
 		-1, // RelExpr
-		40, // UnaryExpr
+		41, // UnaryExpr
 		8,  // ConstantExpr
-		9,  // DerefExpr
-		15, // LookupExpr
+		9,  // CallExpr
+		14, // DerefExpr
+		16, // LookupExpr
 	},
 	gotoRow{ // S21
 		-1, // S'
@@ -269,10 +290,11 @@ var gotoTab = gotoTable{
 		-1, // AndExpr
 		-1, // OrExpr
 		-1, // RelExpr
-		-1, // UnaryExpr
-		-1, // ConstantExpr
-		-1, // DerefExpr
-		-1, // LookupExpr
+		42, // UnaryExpr
+		8,  // ConstantExpr
+		9,  // CallExpr
+		14, // DerefExpr
+		16, // LookupExpr
 	},
 	gotoRow{ // S22
 		-1, // S'
@@ -283,6 +305,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -295,6 +318,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -307,6 +331,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -319,22 +344,11 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
 	gotoRow{ // S26
-		-1, // S'
-		-1, // Goal
-		47, // Expr
-		22, // AndExpr
-		23, // OrExpr
-		24, // RelExpr
-		25, // UnaryExpr
-		27, // ConstantExpr
-		28, // DerefExpr
-		34, // LookupExpr
-	},
-	gotoRow{ // S27
 		-1, // S'
 		-1, // Goal
 		-1, // Expr
@@ -343,8 +357,22 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
+	},
+	gotoRow{ // S27
+		-1, // S'
+		-1, // Goal
+		49, // Expr
+		23, // AndExpr
+		24, // OrExpr
+		25, // RelExpr
+		26, // UnaryExpr
+		28, // ConstantExpr
+		29, // CallExpr
+		34, // DerefExpr
+		36, // LookupExpr
 	},
 	gotoRow{ // S28
 		-1, // S'
@@ -355,6 +383,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -367,6 +396,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -379,6 +409,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -391,6 +422,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -403,6 +435,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -415,6 +448,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -427,6 +461,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -439,6 +474,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -451,6 +487,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -463,6 +500,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -475,6 +513,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -487,6 +526,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -499,6 +539,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -511,6 +552,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -519,12 +561,13 @@ var gotoTab = gotoTable{
 		-1, // Goal
 		-1, // Expr
 		-1, // AndExpr
-		50, // OrExpr
-		24, // RelExpr
-		25, // UnaryExpr
-		27, // ConstantExpr
-		28, // DerefExpr
-		34, // LookupExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
 	},
 	gotoRow{ // S43
 		-1, // S'
@@ -532,23 +575,25 @@ var gotoTab = gotoTable{
 		-1, // Expr
 		-1, // AndExpr
 		-1, // OrExpr
-		51, // RelExpr
-		25, // UnaryExpr
-		27, // ConstantExpr
-		28, // DerefExpr
-		34, // LookupExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
 	},
 	gotoRow{ // S44
 		-1, // S'
 		-1, // Goal
 		-1, // Expr
 		-1, // AndExpr
-		-1, // OrExpr
-		-1, // RelExpr
-		52, // UnaryExpr
-		27, // ConstantExpr
-		28, // DerefExpr
-		34, // LookupExpr
+		52, // OrExpr
+		25, // RelExpr
+		26, // UnaryExpr
+		28, // ConstantExpr
+		29, // CallExpr
+		34, // DerefExpr
+		36, // LookupExpr
 	},
 	gotoRow{ // S45
 		-1, // S'
@@ -556,11 +601,12 @@ var gotoTab = gotoTable{
 		-1, // Expr
 		-1, // AndExpr
 		-1, // OrExpr
-		-1, // RelExpr
-		53, // UnaryExpr
-		27, // ConstantExpr
-		28, // DerefExpr
-		34, // LookupExpr
+		53, // RelExpr
+		26, // UnaryExpr
+		28, // ConstantExpr
+		29, // CallExpr
+		34, // DerefExpr
+		36, // LookupExpr
 	},
 	gotoRow{ // S46
 		-1, // S'
@@ -570,9 +616,10 @@ var gotoTab = gotoTable{
 		-1, // OrExpr
 		-1, // RelExpr
 		54, // UnaryExpr
-		27, // ConstantExpr
-		28, // DerefExpr
-		34, // LookupExpr
+		28, // ConstantExpr
+		29, // CallExpr
+		34, // DerefExpr
+		36, // LookupExpr
 	},
 	gotoRow{ // S47
 		-1, // S'
@@ -581,10 +628,11 @@ var gotoTab = gotoTable{
 		-1, // AndExpr
 		-1, // OrExpr
 		-1, // RelExpr
-		-1, // UnaryExpr
-		-1, // ConstantExpr
-		-1, // DerefExpr
-		-1, // LookupExpr
+		55, // UnaryExpr
+		28, // ConstantExpr
+		29, // CallExpr
+		34, // DerefExpr
+		36, // LookupExpr
 	},
 	gotoRow{ // S48
 		-1, // S'
@@ -593,10 +641,11 @@ var gotoTab = gotoTable{
 		-1, // AndExpr
 		-1, // OrExpr
 		-1, // RelExpr
-		-1, // UnaryExpr
-		-1, // ConstantExpr
-		-1, // DerefExpr
-		-1, // LookupExpr
+		56, // UnaryExpr
+		28, // ConstantExpr
+		29, // CallExpr
+		34, // DerefExpr
+		36, // LookupExpr
 	},
 	gotoRow{ // S49
 		-1, // S'
@@ -607,6 +656,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -619,6 +669,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -631,6 +682,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -643,6 +695,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -655,6 +708,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -667,6 +721,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -679,6 +734,7 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
@@ -691,6 +747,85 @@ var gotoTab = gotoTable{
 		-1, // RelExpr
 		-1, // UnaryExpr
 		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
+	},
+	gotoRow{ // S57
+		-1, // S'
+		-1, // Goal
+		-1, // Expr
+		-1, // AndExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
+	},
+	gotoRow{ // S58
+		-1, // S'
+		-1, // Goal
+		-1, // Expr
+		-1, // AndExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
+	},
+	gotoRow{ // S59
+		-1, // S'
+		-1, // Goal
+		-1, // Expr
+		-1, // AndExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
+	},
+	gotoRow{ // S60
+		-1, // S'
+		-1, // Goal
+		-1, // Expr
+		-1, // AndExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
+	},
+	gotoRow{ // S61
+		-1, // S'
+		-1, // Goal
+		-1, // Expr
+		-1, // AndExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
+		-1, // DerefExpr
+		-1, // LookupExpr
+	},
+	gotoRow{ // S62
+		-1, // S'
+		-1, // Goal
+		-1, // Expr
+		-1, // AndExpr
+		-1, // OrExpr
+		-1, // RelExpr
+		-1, // UnaryExpr
+		-1, // ConstantExpr
+		-1, // CallExpr
 		-1, // DerefExpr
 		-1, // LookupExpr
 	},
