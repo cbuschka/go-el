@@ -3,6 +3,7 @@ package ast
 import (
 	"fmt"
 	"github.com/cbuschka/go-expr/internal/generated/token"
+	"reflect"
 )
 
 type DerefExpr struct {
@@ -31,5 +32,19 @@ func (e *DerefExpr) Eval(env map[string]interface{}) (interface{}, error) {
 		return val, nil
 	}
 
-	return false, fmt.Errorf("deref %s from %v not implemented", e.Identifier, baseVal)
+	typeMeta := reflect.TypeOf(baseVal)
+	if typeMeta.Kind() == reflect.Ptr {
+		typeMeta = typeMeta.Elem()
+	}
+	baseObject := reflect.ValueOf(baseVal)
+	if baseObject.Kind() == reflect.Ptr {
+		baseObject = baseObject.Elem()
+	}
+
+	fieldMeta := baseObject.FieldByName(e.Identifier)
+	if fieldMeta == *new(reflect.Value) {
+		return false, fmt.Errorf("%s not found in %v", e.Identifier, baseVal)
+	}
+
+	return fieldMeta.Interface(), nil
 }

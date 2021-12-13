@@ -116,18 +116,22 @@ func TestCompileAndEvaluateCompareStrings(t *testing.T) {
 	assert.Equal(t, true, result)
 }
 
+type TestStruct struct {
+	Value string
+}
+
 func TestCompileAndEvaluateDeref(t *testing.T) {
 
-	expr, err := CompileExpression("map.value")
+	expr, err := CompileExpression("map.struct.Value")
 	if err != nil {
 		t.Fatal(err)
 		return
 	}
 
 	env := map[string]interface{}{}
-	amap := map[string]interface{}{}
-	amap["value"] = "yay"
-	env["map"] = amap
+	aMap := map[string]interface{}{}
+	aMap["struct"] = TestStruct{Value: "yay"}
+	env["map"] = aMap
 	result, err := expr.Evaluate(env)
 	if err != nil {
 		t.Fatal(err)
