@@ -40,6 +40,7 @@ RelExpr
     : RelExpr "==" UnaryExpr                                       << ast.NewEqExpr($0, $2) >>
     | RelExpr "!=" UnaryExpr                                       << ast.NewNeExpr($0, $2) >>
     | RelExpr "<>" UnaryExpr                                       << ast.NewNeExpr($0, $2) >>
+    | RelExpr "=~" UnaryExpr                                       << ast.NewMatchesExpr($0, $2) >>
     | UnaryExpr                                                    << $0, nil >>
     ;
 

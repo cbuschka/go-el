@@ -231,3 +231,20 @@ func TestCompileAndEvaluateFunctionCallWithArgs(t *testing.T) {
 
 	assert.Equal(t, "Said: huhu", result)
 }
+
+func TestMatchesString(t *testing.T) {
+
+	expr, err := Compile("\"hello\" =~ \"^[a-z]+$\"")
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	result, err := expr.Evaluate()
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	assert.Equal(t, true, result)
+}
