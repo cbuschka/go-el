@@ -142,6 +142,10 @@ func TestCompileAndEvaluateDeref(t *testing.T) {
 	assert.Equal(t, "yay", result)
 }
 
+func (t TestStruct) Self() TestStruct {
+	return t
+}
+
 func (t TestStruct) String() string {
 	return "Yay!"
 }
@@ -163,6 +167,25 @@ func TestCompileAndEvaluateCall(t *testing.T) {
 	}
 
 	assert.Equal(t, "Yay!", result)
+}
+
+func TestCompileAndEvaluateStringEquality(t *testing.T) {
+
+	expr, err := Compile("(struct.Self().String() == \"Yay!\")")
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	evalCtx := NewEvaluationContext()
+	evalCtx.SetValue("struct", TestStruct{})
+	result, err := expr.EvaluateWithContext(evalCtx)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	assert.Equal(t, true, result)
 }
 
 func (t TestStruct) Say(message string, toWhom string, how string) string {

@@ -45,8 +45,19 @@ RelExpr
 
 UnaryExpr
 	: "(" Expr ")"  											    << ast.NewGroupExpr($1) >>
+    | DerefExpr                                                     << $0, nil >>
 	| ConstantExpr                                                  << $0, nil >>
-    | CallExpr                                                      << $0, nil >>
+    ;
+
+DerefExpr
+    : DerefExpr "." identifier "(" ArgList ")"                      << ast.NewMethodCallExpr($0, $2, $4) >>
+    | DerefExpr "." identifier                                      << ast.NewDerefExpr($0, $2) >>
+    | FunctionCallExpr                                              << $0, nil >>
+    | LookupExpr                                                    << $0, nil >>
+    ;
+
+FunctionCallExpr
+    : identifier "(" ArgList ")"                                    << ast.NewFunctionCallExpr($0, $2) >>
     ;
 
 ConstantExpr
@@ -60,17 +71,6 @@ ArgList
     : ArgList "," Expr                                              << ast.NewArgList($0, $2) >>
     | Expr                                                          << ast.NewArgList(nil, $0) >>
     | empty                                                         << ast.NewEmptyArgList() >>
-    ;
-
-CallExpr
-    : DerefExpr "." identifier "(" ArgList ")"                      << ast.NewMethodCallExpr($0, $2, $4) >>
-    | identifier "(" ArgList ")"                                    << ast.NewFunctionCallExpr($0, $2) >>
-    | DerefExpr
-    ;
-
-DerefExpr
-    : DerefExpr "." identifier                                      << ast.NewDerefExpr($0, $2) >>
-    | LookupExpr                                                    << $0, nil >>
     ;
 
 LookupExpr
