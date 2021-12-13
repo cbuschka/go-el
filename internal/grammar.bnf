@@ -56,8 +56,14 @@ ConstantExpr
     | string_lit                                                    << ast.NewConstantStringExpr($0) >>
     ;
 
+ArgList
+    : ArgList "," Expr                                              << ast.NewArgList($0, $2) >>
+    | Expr                                                          << ast.NewArgList(nil, $0) >>
+    ;
+
 CallExpr
-    : DerefExpr "." identifier "(" ")"                              << ast.NewCallExpr($0, $2) >>
+    : DerefExpr "." identifier "(" ArgList ")"                      << ast.NewMethodCallExpr($0, $2, $4) >>
+    | identifier "(" ArgList ")"                                    << ast.NewFunctionCallExpr($0, $2) >>
     | DerefExpr
     ;
 

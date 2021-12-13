@@ -43,7 +43,7 @@ func (e *EvaluationContext) ResolveFrom(name string, parent interface{}) (interf
 
 }
 
-func (e *EvaluationContext) CallOn(name string, target interface{}) (interface{}, error) {
+func (e *EvaluationContext) CallOn(name string, args []interface{}, target interface{}) (interface{}, error) {
 	baseObject := reflect.ValueOf(target)
 
 	methodMeta := baseObject.MethodByName(name)
@@ -51,7 +51,12 @@ func (e *EvaluationContext) CallOn(name string, target interface{}) (interface{}
 		return nil, fmt.Errorf("method %s not found", name)
 	}
 
-	result := methodMeta.Call([]reflect.Value{})
+	argValues := []reflect.Value{}
+	for _, arg := range args {
+		argValues = append(argValues, reflect.ValueOf(arg))
+	}
+
+	result := methodMeta.Call(argValues)
 	if result == nil || len(result) != 1 {
 		return nil, fmt.Errorf("%s returned invalid result %v", name, result)
 	}

@@ -1,6 +1,7 @@
 package el
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -162,4 +163,27 @@ func TestCompileAndEvaluateCall(t *testing.T) {
 	}
 
 	assert.Equal(t, "Yay!", result)
+}
+
+func (t TestStruct) Say(message string, toWhom string, how string) string {
+	return fmt.Sprintf("Said: %s To: %s How: %s", message, toWhom, how)
+}
+
+func TestCompileAndEvaluateCallWithArgs(t *testing.T) {
+
+	expr, err := CompileExpression("struct.Say(\"Hello World!\", \"All of the world\", \"Very loud\")")
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	env := map[string]interface{}{}
+	env["struct"] = TestStruct{}
+	result, err := expr.Evaluate(env)
+	if err != nil {
+		t.Fatal(err)
+		return
+	}
+
+	assert.Equal(t, "Said: Hello World! To: All of the world How: Very loud", result)
 }
