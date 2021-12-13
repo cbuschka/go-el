@@ -59,6 +59,7 @@ ConstantExpr
 ArgList
     : ArgList "," Expr                                              << ast.NewArgList($0, $2) >>
     | Expr                                                          << ast.NewArgList(nil, $0) >>
+    | empty                                                         << ast.NewEmptyArgList() >>
     ;
 
 CallExpr

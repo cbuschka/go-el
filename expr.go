@@ -10,6 +10,11 @@ type Expression struct {
 	program *ast.Expr
 }
 
+type EvaluationContext interface {
+	AddFunction(name string, function interface{})
+	AddValue(name string, value interface{})
+}
+
 func MustCompile(script string) *Expression {
 	expr, err := CompileExpression(script)
 	if err != nil {
@@ -32,9 +37,10 @@ func CompileExpression(script string) (*Expression, error) {
 	return &Expression{program: &boolExpr}, nil
 }
 
-func (e *Expression) Evaluate(env interface{}) (interface{}, error) {
+func NewEvaluationContext() EvaluationContext {
+	return ast.NewEvaluationContext()
+}
 
-	evalContext := ast.NewEvaluationContext(env)
-
-	return (*e.program).Eval(evalContext)
+func (e *Expression) Evaluate(env EvaluationContext) (interface{}, error) {
+	return (*e.program).Eval(env.(*ast.EvaluationContext))
 }

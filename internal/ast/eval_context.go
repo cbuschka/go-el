@@ -6,11 +6,20 @@ import (
 )
 
 type EvaluationContext struct {
-	Root interface{}
+	Root      map[string]interface{}
+	Functions map[string]interface{}
 }
 
-func NewEvaluationContext(root interface{}) *EvaluationContext {
-	return &EvaluationContext{Root: root}
+func NewEvaluationContext() *EvaluationContext {
+	return &EvaluationContext{Root: map[string]interface{}{}, Functions: map[string]interface{}{}}
+}
+
+func (c *EvaluationContext) AddFunction(name string, f interface{}) {
+	c.Functions[name] = f
+}
+
+func (c *EvaluationContext) AddValue(name string, value interface{}) {
+	c.Root[name] = value
 }
 
 func (e *EvaluationContext) Resolve(name string) (interface{}, error) {
@@ -43,7 +52,7 @@ func (e *EvaluationContext) ResolveFrom(name string, parent interface{}) (interf
 
 }
 
-func (e *EvaluationContext) CallOn(name string, args []interface{}, target interface{}) (interface{}, error) {
+func (e *EvaluationContext) CallMethodOn(name string, args []interface{}, target interface{}) (interface{}, error) {
 	baseObject := reflect.ValueOf(target)
 
 	methodMeta := baseObject.MethodByName(name)
@@ -59,6 +68,26 @@ func (e *EvaluationContext) CallOn(name string, args []interface{}, target inter
 	result := methodMeta.Call(argValues)
 	if result == nil || len(result) != 1 {
 		return nil, fmt.Errorf("%s returned invalid result %v", name, result)
+	}
+
+	return result[0].Interface(), nil
+}
+
+func (c *EvaluationContext) CallFunction(identifier string, args []interface{}) (interface{}, error) {
+	function, found := c.Functions[identifier]
+	if !found {
+		return nil, fmt.Errorf("function %s npot found", identifier)
+	}
+
+	argValues := []reflect.Value{}
+	for _, arg := range args {
+		argValues = append(argValues, reflect.ValueOf(arg))
+	}
+
+	functionValue := reflect.ValueOf(function)
+	result := functionValue.Call(argValues)
+	if result == nil || len(result) != 1 {
+		return nil, fmt.Errorf("%s returned invalid result %v", identifier, result)
 	}
 
 	return result[0].Interface(), nil

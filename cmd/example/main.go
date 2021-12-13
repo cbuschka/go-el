@@ -7,7 +7,7 @@ import (
 
 func main() {
 	expr := el.MustCompile("true")
-	env := map[string]interface{}{}
+	env := el.NewEvaluationContext()
 	result, err := expr.Evaluate(env)
 	if err != nil {
 		panic(err)
