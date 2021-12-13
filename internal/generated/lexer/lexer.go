@@ -11,8 +11,8 @@ import (
 
 const (
 	NoState    = -1
-	NumStates  = 31
-	NumSymbols = 33
+	NumStates  = 32
+	NumSymbols = 34
 )
 
 type Lexer struct {
@@ -153,13 +153,14 @@ Lexer symbols:
 21: 'l'
 22: 's'
 23: 'e'
-24: '_'
-25: ' '
-26: '\t'
-27: '\n'
-28: '\r'
-29: '0'-'9'
-30: 'a'-'z'
-31: 'A'-'Z'
-32: .
+24: '.'
+25: '_'
+26: ' '
+27: '\t'
+28: '\n'
+29: '\r'
+30: '0'-'9'
+31: 'a'-'z'
+32: 'A'-'Z'
+33: .
 */
